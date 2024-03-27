@@ -2,7 +2,7 @@
 
 Amaze your friends and flash boulders on the kilter board far above your grade which accoring to the model are graded too high
 
-## Usage
+## Problems
 Some boulders are not shown in the KilterBoard app even tough they are listed in the database. Before I find a solution, you just need to try and see which are there.
 
 ## Usage
