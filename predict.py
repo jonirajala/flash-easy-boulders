@@ -9,6 +9,8 @@ from utils import load_data_from_db, preprocess_data, get_features, SimpleMLPReg
 
 MODEL_PATH = "model.pth"
 N_TOP_DIFFERENCES = 20
+MIN_ASCENTS = 1
+
 
 def load_and_prepare_model(model_path):
     """Load the pretrained model from the given path."""
@@ -35,7 +37,7 @@ def preprocess_and_extract_features():
     print(f"Size after: {len(routes_df)}")
 
     print("Preprocessing data")
-    routes_l1 = preprocess_data(routes_df, routes_grade_df, ascents=2)
+    routes_l1 = preprocess_data(routes_df, routes_grade_df, ascents=MIN_ASCENTS)
     print(f"Data preprocessed, {len(routes_l1)} boulder problems")
 
     print("Extracting features")
