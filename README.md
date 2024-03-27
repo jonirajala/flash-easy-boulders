@@ -4,5 +4,6 @@ Amaze your friends and flash boulders on the kilter board far above your grade w
 
 ## Usage
 
-1. Run train.py to train the model
-2. Run predict.py to get N too highly graded boulders 
+1. Install requirements pip install -r requirements.txt 
+2. Run train.py to train the model
+3. Run predict.py to get N too highly graded boulders 
