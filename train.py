@@ -12,7 +12,7 @@ from utils import load_data_from_db, preprocess_data, get_features, RoutesDatase
 BATCH_SIZE = 128
 NUM_EPOCHS = 10
 LEARNING_RATE = 0.001
-MIN_ASCENTS = 2 # needs this many ascents to boulder to be included
+MIN_ASCENTS = 5 # needs this many ascents to boulder to be included
 
 def load_and_preprocess_data():
     """Load and preprocess data."""

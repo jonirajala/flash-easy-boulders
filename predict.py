@@ -9,7 +9,7 @@ from utils import load_data_from_db, preprocess_data, get_features, SimpleMLPReg
 
 MODEL_PATH = "model.pth"
 N_TOP_DIFFERENCES = 20
-MIN_ASCENTS = 1
+MIN_ASCENTS = 5
 
 
 def load_and_prepare_model(model_path):
@@ -18,7 +18,7 @@ def load_and_prepare_model(model_path):
         print(f"Error: Model file at {model_path} not found.")
         sys.exit(1)  # Exit the program with an error status.
 
-    model = SimpleMLPRegression(1787)  # Assuming 'SimpleMLPRegression' is defined in 'utils'
+    model = SimpleMLPRegression(507)  # Assuming 'SimpleMLPRegression' is defined in 'utils'
     model.load_state_dict(torch.load(model_path))
     model.eval()
     print("Model loaded successfully.")
@@ -37,7 +37,7 @@ def preprocess_and_extract_features():
     print(f"Size after: {len(routes_df)}")
 
     print("Preprocessing data")
-    routes_l1 = preprocess_data(routes_df, routes_grade_df, ascents=MIN_ASCENTS)
+    routes_l1 = preprocess_data(routes_df, routes_grade_df, min_ascents=MIN_ASCENTS)
     print(f"Data preprocessed, {len(routes_l1)} boulder problems")
 
     print("Extracting features")
@@ -68,12 +68,15 @@ def display_top_differences(differences, uuids, actual_values, predictions, rout
     """Display top N differences between actual and predicted values."""
     differences_np = differences.cpu().numpy()
     top_indices = np.argsort(differences_np)[-N:]
+    print(grade_comparision, predictions[637])
     print(f"Top {N} datapoints with the biggest prediction differences:")
     for rank, index in enumerate(reversed(top_indices), start=1):
         uuid = uuids[index]
+        # print(routes_df[routes_df['uuid'] == uuid].columns)
+        # break
         print(f"\nRank {rank}, Datapoint {index}, UUID: {uuid}")
         print(f"Actual: {actual_values[index].item():.2f} ({grade_comparision[math.floor(actual_values[index].item())]}), Predicted: {predictions[index].item():.2f} ({grade_comparision[math.floor(predictions[index].item())]}), Difference: {differences[index].item():.2f}")
-        subset = routes_df[routes_df['uuid'] == uuid][['setter_username', 'name']]
+        subset = routes_df[routes_df['uuid'] == uuid][['setter_username', 'name', 'angle']]
         print(subset.to_string(index=False))
 
 def main():

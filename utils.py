@@ -12,7 +12,7 @@ from sklearn.preprocessing import StandardScaler
 # Constants
 DB_PATH = 'kilter_data.db'
 LAYOUT_ID = 1
-MIN_ASCENTS = 1
+MIN_ASCENTS = 5
 SIZE = (177, 185)
 
 
@@ -47,7 +47,8 @@ def load_data_from_db():
 def preprocess_data(routes_df, routes_grade_df, min_ascents = MIN_ASCENTS):
     """Filter and merge data based on ascents and layout."""
     routes_grade_df = routes_grade_df[routes_grade_df['ascensionist_count'] >= min_ascents]
-    routes_l1 = routes_df[routes_df['layout_id'] == 1][['uuid', 'frames']]
+    routes_l1 = routes_df[(routes_df['layout_id'] == 1) & (routes_df['hsm'] == 1)][['uuid', 'frames']]
+    # routes_l1 = routes_df[routes_df['layout_id'] == 1][['uuid', 'frames']]
     diffs = routes_grade_df[['climb_uuid', 'angle', 'difficulty_average']]
     diffs = diffs.copy()
     diffs.rename(columns={"climb_uuid": "uuid"}, inplace=True)

@@ -2,3 +2,4 @@
 *.pth
 *.db
 /venv
+__pycache__/
